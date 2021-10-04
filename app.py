@@ -516,7 +516,7 @@ def submit_answer(level_source, question_nr, attempt):
         # If the correct answer is chosen, update the total score and the number of correct answered questions
         if question['correct_answer'] in option:
             if session.get('total_score'):
-                session['total_score'] = session.get('total_score') +(config['quiz-max-attempts'] -  session.get('quiz-attempt')  )* 0.5 * question['question_score']
+                session['total_score'] = session.get('total_score') +(config['quiz-max-attempts'] - session.get('quiz-attempt')  )* 0.5 * question['question_score']
             else:
                 session['total_score'] = (config['quiz-max-attempts'] - session.get('quiz-attempt')  )* 0.5 * question['question_score']
             if session.get('correct_answer'):
