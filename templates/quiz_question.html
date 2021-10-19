@@ -20,6 +20,24 @@
                 }
             }
 
+
+            $(document).ready(function () {
+                $("form").submit(function (event) {
+                    var formData = {
+                        "radioValue": $("#radio-button").val(),
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url:"/submit_answer/{{ level_source }}/{{ question_nr }}/{{attempt|int + 1 }}",
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                    }).done(function (data) {
+                    });
+                });
+            });
+
         </script>
     </head>
     <body>
@@ -31,7 +49,7 @@
         {% if question.code and question.code!= "..." %}
             <pre><code class="ml-6 text-xl">{{ question.code }}</code></pre>
         {% endif %}
-        <form action='/submit_answer/{{ level_source }}/{{ question_nr }}/{{attempt|int + 1 }}' method="POST">
+        <form>
             <div class="grid gap-1 rounded-t-xl radio-block">
                 {% for row in question.mp_choice_options %}
                     <div class="p-1 border-blue-600 border-4 rounded-lg shadow-lg">
@@ -41,7 +59,8 @@
                                     type="radio"
                                     name="radio_option"
                                     value="{{ question_nr }}-{{ char_array[loop.index - 1] }}"
-                                    class="class form-radio h-12 w-12">
+                                    class="class form-radio h-12 w-12"
+                                    id = "radio-button">
                             <span>
                                 {% if row.code %}
 
